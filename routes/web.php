@@ -25,3 +25,32 @@ Route::post('contact/submit', function (){
 });
 
 
+
+Route::post('/', function () {
+    // Подключение к базе данных
+    // ...
+
+    // Обработка данных из формы
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $name = $_POST["name"];
+        $email = $_POST["email"];
+        $subject = $_POST["subject"];
+        $message = $_POST["message"];
+
+        // Подготовка SQL-запроса
+        $stmt = $conn->prepare("INSERT INTO contacts (name, email, subject, message) VALUES (?, ?, ?, ?)");
+        $stmt->bind_param("ssss", $name, $email, $subject, $message);
+
+        // Выполнение SQL-запроса
+        if ($stmt->execute()) {
+            echo "Сообщение отправлено успешно!";
+        } else {
+            echo "Ошибка: " . $stmt->error;
+        }
+        $stmt->close();
+    }
+
+    // Закрытие подключения
+    $conn->close();
+});
+

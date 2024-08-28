@@ -8,7 +8,7 @@
 
 <body>
 <h1>Контактная форма</h1>
-<form action="/contact/submit" method="post">
+<form action="subit.php" method="post">
 @csrf
     <div class="form-group">
     <label for="name">Введите имя:</label><br>
